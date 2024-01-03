@@ -1,0 +1,119 @@
+{
+  "version": "35.0.0",
+  "artifacts": {
+    "S3BucketExampleStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "S3BucketExampleStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "S3BucketExampleStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "S3BucketExampleStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/32700726a8131d9a86521bf049a6bdb3a8b3862a1906884a91ca31d0da81fc4e.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "S3BucketExampleStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "S3BucketExampleStack.assets"
+      ],
+      "metadata": {
+        "/S3BucketExampleStack/new-lambdafor-s3/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "newlambdafors3ServiceRole000ADB3D"
+          }
+        ],
+        "/S3BucketExampleStack/new-lambdafor-s3/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "newlambdafors3ServiceRoleDefaultPolicyC8DF47FE"
+          }
+        ],
+        "/S3BucketExampleStack/new-lambdafor-s3/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "newlambdafors33811A697"
+          }
+        ],
+        "/S3BucketExampleStack/image-bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "imagebucketE8F90778"
+          }
+        ],
+        "/S3BucketExampleStack/image-bucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "imagebucketPolicy4ABAA977"
+          }
+        ],
+        "/S3BucketExampleStack/image-bucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "imagebucketAutoDeleteObjectsCustomResource5709A464"
+          }
+        ],
+        "/S3BucketExampleStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/S3BucketExampleStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/S3BucketExampleStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/S3BucketExampleStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/S3BucketExampleStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/S3BucketExampleStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "S3BucketExampleStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

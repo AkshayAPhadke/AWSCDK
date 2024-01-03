@@ -1,0 +1,588 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "AwsInfraProjectStack": {
+        "id": "AwsInfraProjectStack",
+        "path": "AwsInfraProjectStack",
+        "children": {
+          "KeyPair": {
+            "id": "KeyPair",
+            "path": "AwsInfraProjectStack/KeyPair",
+            "children": {
+              "EC2-Key-Pair-cdk-ec2-key-pair": {
+                "id": "EC2-Key-Pair-cdk-ec2-key-pair",
+                "path": "AwsInfraProjectStack/KeyPair/EC2-Key-Pair-cdk-ec2-key-pair",
+                "children": {
+                  "Default": {
+                    "id": "Default",
+                    "path": "AwsInfraProjectStack/KeyPair/EC2-Key-Pair-cdk-ec2-key-pair/Default",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.CfnResource",
+                      "version": "2.117.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CustomResource",
+                  "version": "2.117.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "cdk-ec2-key-pair.KeyPair",
+              "version": "3.3.3"
+            }
+          },
+          "EC2-Key-Pair-Manager-Policy": {
+            "id": "EC2-Key-Pair-Manager-Policy",
+            "path": "AwsInfraProjectStack/EC2-Key-Pair-Manager-Policy",
+            "children": {
+              "ImportedEC2-Key-Pair-Manager-Policy": {
+                "id": "ImportedEC2-Key-Pair-Manager-Policy",
+                "path": "AwsInfraProjectStack/EC2-Key-Pair-Manager-Policy/ImportedEC2-Key-Pair-Manager-Policy",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.117.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "AwsInfraProjectStack/EC2-Key-Pair-Manager-Policy/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::ManagedPolicy",
+                  "aws:cdk:cloudformation:props": {
+                    "description": "Used by Lambda CFN-Resource-Custom-EC2-Key-Pair, which is a custom CFN resource, managing EC2 Key Pairs",
+                    "path": "/",
+                    "policyDocument": {
+                      "Statement": [
+                        {
+                          "Action": [
+                            "ec2:DescribeKeyPairs",
+                            "secretsmanager:ListSecrets"
+                          ],
+                          "Effect": "Allow",
+                          "Resource": "*"
+                        },
+                        {
+                          "Action": [
+                            "ec2:CreateKeyPair",
+                            "ec2:CreateTags",
+                            "ec2:ImportKeyPair"
+                          ],
+                          "Condition": {
+                            "StringLike": {
+                              "aws:RequestTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+                            }
+                          },
+                          "Effect": "Allow",
+                          "Resource": "arn:aws:ec2:*:*:key-pair/*"
+                        },
+                        {
+                          "Action": [
+                            "ec2:CreateTags",
+                            "ec2:DeleteKeyPair",
+                            "ec2:DeleteTags"
+                          ],
+                          "Condition": {
+                            "StringLike": {
+                              "ec2:ResourceTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+                            }
+                          },
+                          "Effect": "Allow",
+                          "Resource": "arn:aws:ec2:*:*:key-pair/*"
+                        },
+                        {
+                          "Action": [
+                            "secretsmanager:CreateSecret",
+                            "secretsmanager:TagResource"
+                          ],
+                          "Condition": {
+                            "StringLike": {
+                              "aws:RequestTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+                            }
+                          },
+                          "Effect": "Allow",
+                          "Resource": "*"
+                        },
+                        {
+                          "Action": [
+                            "secretsmanager:DeleteResourcePolicy",
+                            "secretsmanager:DeleteSecret",
+                            "secretsmanager:DescribeSecret",
+                            "secretsmanager:GetResourcePolicy",
+                            "secretsmanager:GetSecretValue",
+                            "secretsmanager:ListSecretVersionIds",
+                            "secretsmanager:PutResourcePolicy",
+                            "secretsmanager:PutSecretValue",
+                            "secretsmanager:RestoreSecret",
+                            "secretsmanager:UntagResource",
+                            "secretsmanager:UpdateSecret",
+                            "secretsmanager:UpdateSecretVersionStage"
+                          ],
+                          "Condition": {
+                            "StringLike": {
+                              "secretsmanager:ResourceTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+                            }
+                          },
+                          "Effect": "Allow",
+                          "Resource": "*"
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnManagedPolicy",
+                  "version": "2.117.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.ManagedPolicy",
+              "version": "2.117.0"
+            }
+          },
+          "EC2-Key-Pair-Manager-Role": {
+            "id": "EC2-Key-Pair-Manager-Role",
+            "path": "AwsInfraProjectStack/EC2-Key-Pair-Manager-Role",
+            "children": {
+              "ImportEC2-Key-Pair-Manager-Role": {
+                "id": "ImportEC2-Key-Pair-Manager-Role",
+                "path": "AwsInfraProjectStack/EC2-Key-Pair-Manager-Role/ImportEC2-Key-Pair-Manager-Role",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.117.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "AwsInfraProjectStack/EC2-Key-Pair-Manager-Role/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                  "aws:cdk:cloudformation:props": {
+                    "assumeRolePolicyDocument": {
+                      "Statement": [
+                        {
+                          "Action": "sts:AssumeRole",
+                          "Effect": "Allow",
+                          "Principal": {
+                            "Service": "lambda.amazonaws.com"
+                          }
+                        }
+                      ],
+                      "Version": "2012-10-17"
+                    },
+                    "description": "Used by Lambda CFN-Resource-Custom-EC2-Key-Pair, which is a custom CFN resource, managing EC2 Key Pairs",
+                    "managedPolicyArns": [
+                      {
+                        "Ref": "EC2KeyPairManagerPolicyEBBC1576"
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                          ]
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                  "version": "2.117.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_iam.Role",
+              "version": "2.117.0"
+            }
+          },
+          "EC2-Key-Name-Manager-Lambda": {
+            "id": "EC2-Key-Name-Manager-Lambda",
+            "path": "AwsInfraProjectStack/EC2-Key-Name-Manager-Lambda",
+            "children": {
+              "Code": {
+                "id": "Code",
+                "path": "AwsInfraProjectStack/EC2-Key-Name-Manager-Lambda/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "AwsInfraProjectStack/EC2-Key-Name-Manager-Lambda/Code/Stage",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.AssetStaging",
+                      "version": "2.117.0"
+                    }
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "AwsInfraProjectStack/EC2-Key-Name-Manager-Lambda/Code/AssetBucket",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_s3.BucketBase",
+                      "version": "2.117.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_s3_assets.Asset",
+                  "version": "2.117.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "AwsInfraProjectStack/EC2-Key-Name-Manager-Lambda/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": "cdk-hnb659fds-assets-014730877554-ap-south-1",
+                      "s3Key": "6df647194cd2bd5032d6a0553b301f3350abb6035c13b5ba2a73503a45e7fd80.zip"
+                    },
+                    "description": "Custom CFN resource: Manage EC2 Key Pairs",
+                    "functionName": "AwsInfraProjectStack-CFN-Resource-Custom-EC2-Key-Pair",
+                    "handler": "index.handler",
+                    "role": {
+                      "Fn::GetAtt": [
+                        "EC2KeyPairManagerRoleB243C519",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "nodejs18.x",
+                    "timeout": 180
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_lambda.CfnFunction",
+                  "version": "2.117.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_lambda.Function",
+              "version": "2.117.0"
+            }
+          },
+          "default-vpc": {
+            "id": "default-vpc",
+            "path": "AwsInfraProjectStack/default-vpc",
+            "children": {
+              "PublicSubnet1": {
+                "id": "PublicSubnet1",
+                "path": "AwsInfraProjectStack/default-vpc/PublicSubnet1",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.117.0"
+                }
+              },
+              "PublicSubnet2": {
+                "id": "PublicSubnet2",
+                "path": "AwsInfraProjectStack/default-vpc/PublicSubnet2",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.117.0"
+                }
+              },
+              "PublicSubnet3": {
+                "id": "PublicSubnet3",
+                "path": "AwsInfraProjectStack/default-vpc/PublicSubnet3",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.Resource",
+                  "version": "2.117.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.117.0"
+            }
+          },
+          "WebCDKSG": {
+            "id": "WebCDKSG",
+            "path": "AwsInfraProjectStack/WebCDKSG",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "AwsInfraProjectStack/WebCDKSG/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::SecurityGroup",
+                  "aws:cdk:cloudformation:props": {
+                    "groupDescription": "AwsInfraProjectStack/WebCDKSG",
+                    "securityGroupEgress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "description": "Allow all outbound traffic by default",
+                        "ipProtocol": "-1"
+                      }
+                    ],
+                    "securityGroupIngress": [
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "ipProtocol": "tcp",
+                        "fromPort": 80,
+                        "toPort": 80,
+                        "description": "Allow Traffic from Anywhere"
+                      },
+                      {
+                        "cidrIp": "0.0.0.0/0",
+                        "ipProtocol": "tcp",
+                        "fromPort": 22,
+                        "toPort": 22,
+                        "description": "Allow SSH"
+                      }
+                    ],
+                    "vpcId": "vpc-0f283c3ca9b7c92ee"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnSecurityGroup",
+                  "version": "2.117.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ec2.SecurityGroup",
+              "version": "2.117.0"
+            }
+          },
+          "CDK-webServer-Instance": {
+            "id": "CDK-webServer-Instance",
+            "path": "AwsInfraProjectStack/CDK-webServer-Instance",
+            "children": {
+              "InstanceRole": {
+                "id": "InstanceRole",
+                "path": "AwsInfraProjectStack/CDK-webServer-Instance/InstanceRole",
+                "children": {
+                  "ImportInstanceRole": {
+                    "id": "ImportInstanceRole",
+                    "path": "AwsInfraProjectStack/CDK-webServer-Instance/InstanceRole/ImportInstanceRole",
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.Resource",
+                      "version": "2.117.0"
+                    }
+                  },
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "AwsInfraProjectStack/CDK-webServer-Instance/InstanceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "ec2.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "tags": [
+                          {
+                            "key": "Name",
+                            "value": "AwsInfraProjectStack/CDK-webServer-Instance"
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "aws-cdk-lib.aws_iam.CfnRole",
+                      "version": "2.117.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.Role",
+                  "version": "2.117.0"
+                }
+              },
+              "InstanceProfile": {
+                "id": "InstanceProfile",
+                "path": "AwsInfraProjectStack/CDK-webServer-Instance/InstanceProfile",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::IAM::InstanceProfile",
+                  "aws:cdk:cloudformation:props": {
+                    "roles": [
+                      {
+                        "Ref": "CDKwebServerInstanceInstanceRoleDCF54A39"
+                      }
+                    ]
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_iam.CfnInstanceProfile",
+                  "version": "2.117.0"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "AwsInfraProjectStack/CDK-webServer-Instance/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::EC2::Instance",
+                  "aws:cdk:cloudformation:props": {
+                    "availabilityZone": "ap-south-1a",
+                    "iamInstanceProfile": {
+                      "Ref": "CDKwebServerInstanceInstanceProfile1F48CA4C"
+                    },
+                    "imageId": {
+                      "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+                    },
+                    "instanceType": "t2.micro",
+                    "keyName": {
+                      "Fn::GetAtt": [
+                        "KeyPairEC2KeyPaircdkec2keypair080E8800",
+                        "KeyPairName"
+                      ]
+                    },
+                    "securityGroupIds": [
+                      {
+                        "Fn::GetAtt": [
+                          "WebCDKSG57836B55",
+                          "GroupId"
+                        ]
+                      }
+                    ],
+                    "subnetId": "subnet-0fb6c79f26ff928d2",
+                    "tags": [
+                      {
+                        "key": "Name",
+                        "value": "AwsInfraProjectStack/CDK-webServer-Instance"
+                      }
+                    ],
+                    "userData": {
+                      "Fn::Base64": "#!/bin/bash\n#!/binb/bash\n\nsudo su\nyum update -y\nyum install -y httpd\n\nsystemctl start httpd\nsystemctl enable httpd\n\necho \"<h1> Hello World from $(hostname -f)</h1>\" > /var/www/html/index.html"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.aws_ec2.CfnInstance",
+                  "version": "2.117.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.aws_ec2.Instance",
+              "version": "2.117.0"
+            }
+          },
+          "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": {
+            "id": "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "path": "AwsInfraProjectStack/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.117.0"
+            }
+          },
+          "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118": {
+            "id": "SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "path": "AwsInfraProjectStack/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.Resource",
+              "version": "2.117.0"
+            }
+          },
+          "public dns name": {
+            "id": "public dns name",
+            "path": "AwsInfraProjectStack/public dns name",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.117.0"
+            }
+          },
+          "IP address": {
+            "id": "IP address",
+            "path": "AwsInfraProjectStack/IP address",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.117.0"
+            }
+          },
+          "Key Pair": {
+            "id": "Key Pair",
+            "path": "AwsInfraProjectStack/Key Pair",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.117.0"
+            }
+          },
+          "Download Key Command": {
+            "id": "Download Key Command",
+            "path": "AwsInfraProjectStack/Download Key Command",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.117.0"
+            }
+          },
+          "ssh command": {
+            "id": "ssh command",
+            "path": "AwsInfraProjectStack/ssh command",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnOutput",
+              "version": "2.117.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "AwsInfraProjectStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "AwsInfraProjectStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.117.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
+            }
+          },
+          "BootstrapVersion": {
+            "id": "BootstrapVersion",
+            "path": "AwsInfraProjectStack/BootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnParameter",
+              "version": "2.117.0"
+            }
+          },
+          "CheckBootstrapVersion": {
+            "id": "CheckBootstrapVersion",
+            "path": "AwsInfraProjectStack/CheckBootstrapVersion",
+            "constructInfo": {
+              "fqn": "aws-cdk-lib.CfnRule",
+              "version": "2.117.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "aws-cdk-lib.Stack",
+          "version": "2.117.0"
+        }
+      },
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "constructs.Construct",
+          "version": "10.3.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "aws-cdk-lib.App",
+      "version": "2.117.0"
+    }
+  }
+}

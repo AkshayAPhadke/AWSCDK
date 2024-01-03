@@ -1,0 +1,149 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "AwsInfraProjectStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "AwsInfraProjectStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "AwsInfraProjectStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://014730877554/ap-south-1",
+      "properties": {
+        "templateFile": "AwsInfraProjectStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::014730877554:role/cdk-hnb659fds-deploy-role-014730877554-ap-south-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::014730877554:role/cdk-hnb659fds-cfn-exec-role-014730877554-ap-south-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-014730877554-ap-south-1/9e2db34bf13dd22e380448f3cfd1d055114f1abd21cb5642802423ec7ffaac5b.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "AwsInfraProjectStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::014730877554:role/cdk-hnb659fds-lookup-role-014730877554-ap-south-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "AwsInfraProjectStack.assets"
+      ],
+      "metadata": {
+        "/AwsInfraProjectStack/KeyPair/EC2-Key-Pair-cdk-ec2-key-pair/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "KeyPairEC2KeyPaircdkec2keypair080E8800"
+          }
+        ],
+        "/AwsInfraProjectStack/EC2-Key-Pair-Manager-Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2KeyPairManagerPolicyEBBC1576"
+          }
+        ],
+        "/AwsInfraProjectStack/EC2-Key-Pair-Manager-Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2KeyPairManagerRoleB243C519"
+          }
+        ],
+        "/AwsInfraProjectStack/EC2-Key-Name-Manager-Lambda/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "EC2KeyNameManagerLambdaBE629145"
+          }
+        ],
+        "/AwsInfraProjectStack/WebCDKSG/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "WebCDKSG57836B55"
+          }
+        ],
+        "/AwsInfraProjectStack/CDK-webServer-Instance/InstanceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKwebServerInstanceInstanceRoleDCF54A39"
+          }
+        ],
+        "/AwsInfraProjectStack/CDK-webServer-Instance/InstanceProfile": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKwebServerInstanceInstanceProfile1F48CA4C"
+          }
+        ],
+        "/AwsInfraProjectStack/CDK-webServer-Instance/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKwebServerInstance6DACE372"
+          }
+        ],
+        "/AwsInfraProjectStack/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn2-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+          }
+        ],
+        "/AwsInfraProjectStack/public dns name": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "publicdnsname"
+          }
+        ],
+        "/AwsInfraProjectStack/IP address": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "IPaddress"
+          }
+        ],
+        "/AwsInfraProjectStack/Key Pair": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "KeyPair"
+          }
+        ],
+        "/AwsInfraProjectStack/Download Key Command": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DownloadKeyCommand"
+          }
+        ],
+        "/AwsInfraProjectStack/ssh command": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "sshcommand"
+          }
+        ],
+        "/AwsInfraProjectStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/AwsInfraProjectStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/AwsInfraProjectStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "AwsInfraProjectStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

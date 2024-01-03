@@ -1,0 +1,395 @@
+{
+ "Resources": {
+  "KeyPairEC2KeyPaircdkec2keypair080E8800": {
+   "Type": "Custom::EC2-Key-Pair",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "EC2KeyNameManagerLambdaBE629145",
+      "Arn"
+     ]
+    },
+    "Name": "cdk-ec2-key-pair",
+    "Description": "Key Pair for CDK deployment",
+    "KmsPrivate": "alias/aws/secretsmanager",
+    "KmsPublic": "alias/aws/secretsmanager",
+    "PublicKey": "",
+    "StorePublicKey": false,
+    "ExposePublicKey": false,
+    "PublicKeyFormat": "OPENSSH",
+    "RemoveKeySecretsAfterDays": 0,
+    "SecretPrefix": "ec2-ssh-key/",
+    "StackName": "AwsInfraProjectStack",
+    "Tags": {
+     "CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "AwsInfraProjectStack/KeyPair/EC2-Key-Pair-cdk-ec2-key-pair/Default"
+   }
+  },
+  "EC2KeyPairManagerPolicyEBBC1576": {
+   "Type": "AWS::IAM::ManagedPolicy",
+   "Properties": {
+    "Description": "Used by Lambda CFN-Resource-Custom-EC2-Key-Pair, which is a custom CFN resource, managing EC2 Key Pairs",
+    "Path": "/",
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ec2:DescribeKeyPairs",
+        "secretsmanager:ListSecrets"
+       ],
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "ec2:CreateKeyPair",
+        "ec2:CreateTags",
+        "ec2:ImportKeyPair"
+       ],
+       "Condition": {
+        "StringLike": {
+         "aws:RequestTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "arn:aws:ec2:*:*:key-pair/*"
+      },
+      {
+       "Action": [
+        "ec2:CreateTags",
+        "ec2:DeleteKeyPair",
+        "ec2:DeleteTags"
+       ],
+       "Condition": {
+        "StringLike": {
+         "ec2:ResourceTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "arn:aws:ec2:*:*:key-pair/*"
+      },
+      {
+       "Action": [
+        "secretsmanager:CreateSecret",
+        "secretsmanager:TagResource"
+       ],
+       "Condition": {
+        "StringLike": {
+         "aws:RequestTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "secretsmanager:DeleteResourcePolicy",
+        "secretsmanager:DeleteSecret",
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:GetResourcePolicy",
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:ListSecretVersionIds",
+        "secretsmanager:PutResourcePolicy",
+        "secretsmanager:PutSecretValue",
+        "secretsmanager:RestoreSecret",
+        "secretsmanager:UntagResource",
+        "secretsmanager:UpdateSecret",
+        "secretsmanager:UpdateSecretVersionStage"
+       ],
+       "Condition": {
+        "StringLike": {
+         "secretsmanager:ResourceTag/CreatedByCfnCustomResource": "CFN::Resource::Custom::EC2-Key-Pair"
+        }
+       },
+       "Effect": "Allow",
+       "Resource": "*"
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "AwsInfraProjectStack/EC2-Key-Pair-Manager-Policy/Resource"
+   }
+  },
+  "EC2KeyPairManagerRoleB243C519": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "Used by Lambda CFN-Resource-Custom-EC2-Key-Pair, which is a custom CFN resource, managing EC2 Key Pairs",
+    "ManagedPolicyArns": [
+     {
+      "Ref": "EC2KeyPairManagerPolicyEBBC1576"
+     },
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "AwsInfraProjectStack/EC2-Key-Pair-Manager-Role/Resource"
+   }
+  },
+  "EC2KeyNameManagerLambdaBE629145": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": "cdk-hnb659fds-assets-014730877554-ap-south-1",
+     "S3Key": "6df647194cd2bd5032d6a0553b301f3350abb6035c13b5ba2a73503a45e7fd80.zip"
+    },
+    "Description": "Custom CFN resource: Manage EC2 Key Pairs",
+    "FunctionName": "AwsInfraProjectStack-CFN-Resource-Custom-EC2-Key-Pair",
+    "Handler": "index.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "EC2KeyPairManagerRoleB243C519",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Timeout": 180
+   },
+   "DependsOn": [
+    "EC2KeyPairManagerRoleB243C519"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "AwsInfraProjectStack/EC2-Key-Name-Manager-Lambda/Resource",
+    "aws:asset:path": "asset.6df647194cd2bd5032d6a0553b301f3350abb6035c13b5ba2a73503a45e7fd80.zip",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "WebCDKSG57836B55": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "AwsInfraProjectStack/WebCDKSG",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow Traffic from Anywhere",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     },
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow SSH",
+      "FromPort": 22,
+      "IpProtocol": "tcp",
+      "ToPort": 22
+     }
+    ],
+    "VpcId": "vpc-0f283c3ca9b7c92ee"
+   },
+   "Metadata": {
+    "aws:cdk:path": "AwsInfraProjectStack/WebCDKSG/Resource"
+   }
+  },
+  "CDKwebServerInstanceInstanceRoleDCF54A39": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ec2.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "AwsInfraProjectStack/CDK-webServer-Instance"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "AwsInfraProjectStack/CDK-webServer-Instance/InstanceRole/Resource"
+   }
+  },
+  "CDKwebServerInstanceInstanceProfile1F48CA4C": {
+   "Type": "AWS::IAM::InstanceProfile",
+   "Properties": {
+    "Roles": [
+     {
+      "Ref": "CDKwebServerInstanceInstanceRoleDCF54A39"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "AwsInfraProjectStack/CDK-webServer-Instance/InstanceProfile"
+   }
+  },
+  "CDKwebServerInstance6DACE372": {
+   "Type": "AWS::EC2::Instance",
+   "Properties": {
+    "AvailabilityZone": "ap-south-1a",
+    "IamInstanceProfile": {
+     "Ref": "CDKwebServerInstanceInstanceProfile1F48CA4C"
+    },
+    "ImageId": {
+     "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+    },
+    "InstanceType": "t2.micro",
+    "KeyName": {
+     "Fn::GetAtt": [
+      "KeyPairEC2KeyPaircdkec2keypair080E8800",
+      "KeyPairName"
+     ]
+    },
+    "SecurityGroupIds": [
+     {
+      "Fn::GetAtt": [
+       "WebCDKSG57836B55",
+       "GroupId"
+      ]
+     }
+    ],
+    "SubnetId": "subnet-0fb6c79f26ff928d2",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "AwsInfraProjectStack/CDK-webServer-Instance"
+     }
+    ],
+    "UserData": {
+     "Fn::Base64": "#!/bin/bash\n#!/binb/bash\n\nsudo su\nyum update -y\nyum install -y httpd\n\nsystemctl start httpd\nsystemctl enable httpd\n\necho \"<h1> Hello World from $(hostname -f)</h1>\" > /var/www/html/index.html"
+    }
+   },
+   "DependsOn": [
+    "CDKwebServerInstanceInstanceRoleDCF54A39"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "AwsInfraProjectStack/CDK-webServer-Instance/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1VQy04DMQz8Fu7Z0G4PiCOtBOKAWC0fULlZd+VuHlXsFFWr/DsJpRU9zdia8dhu9XL5pBcP8M2NGabG0k7PXwJmUpvEElyPHFI0qDZ7f+NFvZ0JnJ4/wMOIQxcsmXPV3Df6YC/OP3z3LOANdjHsyWJWFtxuAD2/Jm+Egq+iK8+KV1tgRmH9UqHUep3MhLIGRoWmLbuiSZHk/BZDOlb3feMa+D88Z3W75HduuXckP1ZNBxEcCsZafCY5JsnKhwH1gR9P7UI/l2cdmKiJyQs51P0FfwAqz7U0SQEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "AwsInfraProjectStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
+   "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+   "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+  },
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Outputs": {
+  "publicdnsname": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CDKwebServerInstance6DACE372",
+     "PublicDnsName"
+    ]
+   }
+  },
+  "IPaddress": {
+   "Value": {
+    "Fn::GetAtt": [
+     "CDKwebServerInstance6DACE372",
+     "PublicIp"
+    ]
+   }
+  },
+  "KeyPair": {
+   "Value": {
+    "Fn::GetAtt": [
+     "KeyPairEC2KeyPaircdkec2keypair080E8800",
+     "KeyPairName"
+    ]
+   }
+  },
+  "DownloadKeyCommand": {
+   "Value": "aws secretsmanager get-secret-value --secret-id ec2-ssh-key/cdk-keypair/private --query SecretString -- output text > cdk-key.pem && chmod 400 cdk-key.pem"
+  },
+  "sshcommand": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "ssh -i cdk-key.pem -o IndentitiesOnly=yes ec2-user@",
+      {
+       "Fn::GetAtt": [
+        "CDKwebServerInstance6DACE372",
+        "PublicIp"
+       ]
+      }
+     ]
+    ]
+   }
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
